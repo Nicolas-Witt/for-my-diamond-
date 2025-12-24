@@ -4,7 +4,7 @@
    <link rel="shortcut icon" href="favicon.ico">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Para Minha Eterna Dona</title>
+  <title>Para Eterna Dona</title>
 
   <!-- FONTES -->
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@300;400;700&family=Marck+Script&display=swap" rel="stylesheet">
@@ -196,10 +196,15 @@
       background:linear-gradient(135deg,#ffffff,#f9f3f5,#fff7fa);
       width:90%;
       max-width:420px;
+
+      /* >>> ALTURA fixa com scroll */
+      height:80vh;
+      overflow-y:auto;
+      scroll-behavior:smooth;
+
       padding:35px 28px;
       border-radius:26px;
 
-      /* brilho suave */
       box-shadow:
         0 0 20px rgba(255, 130, 170, 0.45),
         0 0 45px rgba(255, 150, 190, 0.35),
@@ -215,21 +220,25 @@
       to{ opacity:1; transform:scale(1); }
     }
 
-    /* BOTÃO X */
+    /* BOTÃO X FIXO NO TOPO */
     .close-x{
-      position:absolute;
-      top:10px;
-      right:14px;
-      font-size:26px;
+      position:sticky;
+      top:0;
+      font-size:28px;
       font-weight:bold;
       color:#b43c68;
       cursor:pointer;
-      transition:.2s;
+      z-index:50;
+      background:#fff0f6;
+      padding:4px 10px;
+      border-radius:10px;
+      margin-left:auto;
+      margin-bottom:10px;
+      display:block;
     }
 
     .close-x:hover{
-      transform:scale(1.2);
-      color:#922c54;
+      transform:scale(1.15);
     }
 
     .poem-box h2{
@@ -446,43 +455,35 @@ function closePoem(){
 const memories=[
   { img:"jogoveneno.jpeg", text:"Perdi 4 seguidas, porém amei estar com meu amor e perder pra ela... =3" },
   { img:"jokers.jpeg", text:"Nossos queridinhos, não esqueci assim como me encanto em seus detalhes ... 𝓡" },
-  { img:"madameff.jpeg", text:"O dia que eu tavsa fofinho kkkk agente tava jogando de terror mor." },
+  { img:"madameff.jpeg", text:"O dia que eu tava fofinho kkkk agente tava jogando de terror mor." },
   { img:"tuqmanda.jpeg", text:"Sabe que manda em mim meu pedacinho do céu, pois tudo compete a eu te amar pra sempre." },
   { img:"vestidinho.jpeg", text:"Sua Diva!" },
   { img:"totoro.jpeg", text:"Esse dia eu fiquei 4 dias sem saber o que comentar... voce sabia que tava entalado um EU TE AMO." },
-  { img:"poema.jpeg", text:"Me lembro do dia que lhe levei ali e estávamos em call... dia perfeito <3" },
-  { img:"pochacco.jpeg", text:"Me lembro que deu uma questão de preocupação... foi audacioso da minha parte pois eu não tinha me declarado e estava com vergonha. Mas você ficou linda meu amor" },
-  { img:"comilao.jpeg", text:"Eu lembro que te procurei bastante... ainda uso essa foto até hoje. Te amo." },
-  { img:"pelucias.jpeg", text:"Meu amor me trancou numa casinha nesse mapa kkkk" },
-  { img:"presente1.jpeg", text:"Como eu poderia esquecer ? ..." },
-  { img:"presente2.jpeg", text:"Espero que tenha amado cada detalhe, eu sonho agora com seu sim todo dia meu amor, minha princesa <3 " },
-  { img:"rosas.jpeg", text:"Quando sentir saudade, venha aqui... por enquanto não estou presente com voce, mas saiba que pra sempre eu te amo..." }
+  { img:"poema.jpeg", text:"Me lembro do dia que lhe levei ali e estávamos em call... dia perfeito..." }
 ];
 
-let current = 0;
+let currentMemory = 0;
 
 function openMemories(){
+  currentMemory = 0;
+  updateMemory();
   document.getElementById("memoriesModal").style.display="flex";
-  showMemory();
 }
-
 function closeMemories(){
   document.getElementById("memoriesModal").style.display="none";
 }
-
-function showMemory(){
-  document.getElementById("memoryImage").src = memories[current].img;
-  document.getElementById("memoryText").innerText = memories[current].text;
-}
-
 function nextMemory(){
-  current = (current+1) % memories.length;
-  showMemory();
+  currentMemory = (currentMemory + 1) % memories.length;
+  updateMemory();
 }
-
 function prevMemory(){
-  current = (current-1 + memories.length) % memories.length;
-  showMemory();
+  currentMemory = (currentMemory - 1 + memories.length) % memories.length;
+  updateMemory();
+}
+function updateMemory(){
+  const memory = memories[currentMemory];
+  document.getElementById("memoryImage").src = memory.img;
+  document.getElementById("memoryText").innerText = memory.text;
 }
 
 </script>
